@@ -20,7 +20,7 @@ app.use(express.json({ limit: '1mb' }));
 app.use(express.urlencoded({ extended: true }));
 
 // Healthcheck
-app.get('/api/health', (_req, res) => {
+app.get('/health', (_req, res) => {
   res.json({ status: 'ok' });
 });
 
@@ -31,18 +31,15 @@ app.use('/uploads', express.static(UPLOADS_DIR, {
   }
 }));
 
-// API routes
-app.use('/api/image', imageRouter);
-app.use('/api/text', textRouter);
-app.use('/api/qrcode', qrcodeRouter);
+// API routes (no /api prefix now)
+app.use('/image', imageRouter);
+app.use('/text', textRouter);
+app.use('/qrcode', qrcodeRouter);
 
 // Start cleanup job
 startUploadCleanup(UPLOADS_DIR, 5 * 60 * 1000, 60 * 1000);
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
-  // eslint-disable-next-line no-console
   console.log(`Backend running on http://localhost:${PORT}`);
 });
-
-
