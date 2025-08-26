@@ -6,6 +6,7 @@ import { fileURLToPath } from 'url';
 import imageRouter from './routes/image.js';
 import textRouter from './routes/text.js';
 import qrcodeRouter from './routes/qrcode.js';
+import mediaRouter from './routes/media.js';
 import { startUploadCleanup } from './utils/cleanup.js';
 
 const app = express();
@@ -35,6 +36,7 @@ app.use('/uploads', express.static(UPLOADS_DIR, {
 app.use('/image', imageRouter);
 app.use('/text', textRouter);
 app.use('/qrcode', qrcodeRouter);
+app.use('/media', mediaRouter);
 
 // Start cleanup job
 startUploadCleanup(UPLOADS_DIR, 5 * 60 * 1000, 60 * 1000);
